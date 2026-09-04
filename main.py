@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+from worker import send_email_task
 
 app = FastAPI()
 
@@ -46,6 +47,14 @@ def campaignModel(campaign_data:Campaign):
 @app.get("/campaignchecking/")
 def campaign_checking():
     return{"campaign":campaign_db}
+
+@app.post("/campaign/send")
+def campaign_sending():
+    send_email_task.delay(user_db,campaign_db)
+    return {"message":"data recived successfully"}
+   
+
+           
 
 
 
