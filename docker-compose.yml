@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  email_redis:
+    image: redis:alpine
+    container_name: email_redis
+    ports:
+      - "6379:6379"
+
+  email_fastapi:
+    build:
+      context: .
+    container_name: email_fastapi
+    volumes:
+      - .:/app
+
+    environment:
+      - PYTHONPATH=/app
+    
+    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    depends_on:
+      - email_redis
+
+  email_celery_worker:
+    build:
+      context: .
+    container_name: email_celery_worker
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONPATH=/app/app
+      
+    command: python -m debugpy --listen 0.0.0.0:5678 -m celery -A app.my_worker worker -l info --pool=solo
+
+    ports:
+      - "5678:5678"
+    depends_on:
+      - email_redis
