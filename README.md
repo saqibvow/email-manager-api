@@ -25,8 +25,8 @@ Built using **FastAPI**, **Celery (with Redis)**, and **Dockerized SQLite**.
 
 ### Step 1: Clone the Project
 ```bash
-git clone <your-repository-link>
-cd <your-project-folder>
+git clone https://github.com/saqibvow/email-manager-api.git
+cd "email-manager-api"
 ```
 
 ### Step 2: Start Redis Server (Broker)
