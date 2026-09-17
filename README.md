@@ -19,7 +19,7 @@ Built using **FastAPI**, **Celery (with Redis)**, and **Dockerized SQLite**.
 
 ### Step 1: Clone the Project
 ```bash
-git clone https://github.com
+git https://github.com/saqibvow/email-manager-api.git
 cd "email-manager-api"
 ```
 
